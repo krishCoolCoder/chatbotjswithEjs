@@ -7,8 +7,35 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
 const messages = []; // Store chat messages in-memory (for demonstration purposes)
+const login = [
+    {
+        userName : "admin",
+        password : "admin"
+    },
+    {
+        userName : "user",
+        password : "user"
+    }
+]
+const userLoginData = {
+    userName : null,
+    password : null
+}
+
+const userLoginConvo = [
+    { sender: 'bot', text: "Hi there user, I am not able to recognize you, can you give me your name and password." },
+    { sender: 'bot', text: "Kinldy Enter the user Name" },
+    { sender: 'bot', text: "Kinldy Enter the secret password." },
+]
+
+app.get('/login', ( req, res)=>{
+    res.render('index',{ userLoginConvo });
+})
 
 app.get('/', (req, res) => {
+    // if (userLoginData.userName == null || userLoginData.password == null){
+
+    // }
     console.log("The messge in / is : ", messages)
   res.render('index', { messages });
 });
@@ -27,8 +54,6 @@ console.log("Hello world and the userMessage is : ", userMessage)
     messages.push({ sender: 'bot', text: botResponse });
     let data = require('./intent.js');
     messages.push({ sender: 'bot', text: "Your intent is : " + data(userMessage)});
-    console.log("data is this : ",data(userMessage));
-    console.log("the messages are : ", messages)
 
     // Redirect back to the chatbot page
     res.redirect('/');

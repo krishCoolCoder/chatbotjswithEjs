@@ -32,19 +32,30 @@ classifier.train();
 
 // Function to recognize the intent
 function recognizeIntent(input) {
+  // const tokens = tokenizer.tokenize(input);
+  // return classifier.classify(tokens);
+
   const tokens = tokenizer.tokenize(input);
-  return classifier.classify(tokens);
+  const recognizedIntent = classifier.classify(tokens);
+
+  // Check if the recognized intent has a confidence score of zero
+  const confidence = classifier.getClassifications(tokens);
+  const fallbackThreshold = 0.20; // You can adjust this threshold as needed
+  console.log("The cofindence is this : ", confidence)
+  const isFallback = confidence.every((result) => result.value >= fallbackThreshold);
+  console.log("isFallback is this : ", isFallback);
+  return isFallback ? 'fallback_intent' : recognizedIntent;
 }
 
 // Example usage
-const userInput = 'I need to create a bot';
-const recognizedIntent = recognizeIntent(userInput);
+// const userInput = 'I need to create a bot';
+// const recognizedIntent = recognizeIntent(userInput);
 
 function intent(input){
   
   const val = recognizeIntent(input);
   return val;
 }
-console.log('Recognized intent:', recognizedIntent);
+// console.log('Recognized intent:', recognizedIntent);
 
 module.exports = intent;
