@@ -1,19 +1,32 @@
-const { WordTokenizer, BayesClassifier } = require('natural');
+// const { WordTokenizer, BayesClassifier } = require("natural");
+// import { WordTokenizer, BayesClassifier } from "natural";
+import pkg from "natural";
+const { WordTokenizer, BayesClassifier } = pkg;
 
 // Sample intents and their corresponding patterns
 const intents = [
-  { name: 'greeting', patterns: ['hello', 'hi', 'hey'] },
-  { name: 'goodbye', patterns: ['bye', 'see you later', 'goodbye'] },
-  { name: 'createLead', patterns:   [
-    'I like to create a customer',
-    'I need to create a customer',
-    'I need to create a lead'
-] },
-  { name: 'createChatBot', patterns:   [
-    'I like to create a chatbot',
-    'I need to create a bot',
-    'I need to create a chatbot'
-] },
+  { name: "greeting", patterns: ["hello", "hi", "hey"] },
+  { name: "goodbye", patterns: ["bye", "see you later", "goodbye", "tata"] },
+  {
+    name: "createLead",
+    patterns: [
+      "I like to create a customer",
+      "I need to create a customer",
+      "I need to create a lead",
+    ],
+  },
+  {
+    name: "createChatBot",
+    patterns: [
+      "I like to create a chatbot",
+      "I need to create a bot",
+      "I need to create a chatbot",
+    ],
+  },
+  {
+    name: "products",
+    patterns: ["the type of loans", "list of loans", "varieties of loans"],
+  },
   // Add more intents and patterns as needed
 ];
 
@@ -40,22 +53,23 @@ function recognizeIntent(input) {
 
   // Check if the recognized intent has a confidence score of zero
   const confidence = classifier.getClassifications(tokens);
-  const fallbackThreshold = 0.20; // You can adjust this threshold as needed
-  console.log("The cofindence is this : ", confidence)
-  const isFallback = confidence.every((result) => result.value >= fallbackThreshold);
+  const fallbackThreshold = 0.201; // You can adjust this threshold as needed
+  console.log("The cofindence is this : ", confidence);
+  const isFallback = confidence.every(
+    (result) => result.value >= fallbackThreshold
+  );
   console.log("isFallback is this : ", isFallback);
-  return isFallback ? 'fallback_intent' : recognizedIntent;
+  return isFallback ? "fallback_intent" : recognizedIntent;
 }
 
 // Example usage
 // const userInput = 'I need to create a bot';
 // const recognizedIntent = recognizeIntent(userInput);
 
-function intent(input){
-  
+export function intent(input) {
   const val = recognizeIntent(input);
   return val;
 }
 // console.log('Recognized intent:', recognizedIntent);
 
-module.exports = intent;
+// module.exports = intent;
