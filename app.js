@@ -1,6 +1,3 @@
-// const express = require("express");
-// let data = require("./intent.js");
-// let chatgptResponse = require("./chatgpt.js");
 import express from "express";
 import { intent } from "./intent.js";
 import { chatgptResponse } from "./chatgpt.js";
@@ -46,9 +43,6 @@ app.get("/login", (req, res) => {
 });
 
 app.get("/", (req, res) => {
-  // if (userLoginData.userName == null || userLoginData.password == null){
-
-  // }
   console.log("The messge in / is : ", messages);
   res.render("index", { messages });
 });
